@@ -1,6 +1,7 @@
 import Input from "../Input";
 import styled from 'styled-components';
 import { useState } from "react";
+import { livros } from './dadosPesquisa';
 
 const PesquisaContainer = styled.section`
         background-image: linear-gradient(90deg, #002F52 35%, #326589 165%);
@@ -26,14 +27,18 @@ const Subtitulo = styled.h3`
 
 function Pesquisa(){
 
-    const [ textoDigitado, setTextoDigitado ] = useState('');
+    const [ livrosPesquisados, setLivrosPesquisados ] = useState([]);
     return (
         <PesquisaContainer>
             <Titulo>Do you know where to start?</Titulo>
             <Subtitulo>Find your book on our bookcase</Subtitulo>
             <Input
                 placeholder="Search your next reading"
-                onBlur={evento => setTextoDigitado(evento.target.value)}
+                onBlur={evento => {
+                    const textoDigitado = evento.target.value
+                    const resultadoPesquisa = livros.filter( livro => livro.nome.includes(textoDigitado) )
+                    setLivrosPesquisados(resultadoPesquisa)
+                }}
             />
         </PesquisaContainer>
     )
